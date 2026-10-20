@@ -1,0 +1,57 @@
+{
+  "name": "sinway",
+  "version": "0.1.0",
+  "description": "Fine-grained reactive stores for Sinwan — createStore, persist, temporal undo/redo, and full json0 OT.",
+  "author": "Mohammed Ben Cheikh",
+  "license": "MIT",
+  "bugs": "https://github.com/sinwanjs/sinway/issues",
+  "homepage": "https://sinwanjs.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinwanjs/sinway.git"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "development": "./src/index.ts"
+    }
+  },
+  "keywords": [
+    "sinwan",
+    "sinway",
+    "store",
+    "state",
+    "reactivity",
+    "persist",
+    "undo",
+    "ot",
+    "json0"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "bun run build.ts",
+    "test": "bun test --coverage ./__tests__",
+    "typecheck": "bunx tsc -p tsconfig.json",
+    "prepublishOnly": "bun run typecheck && bun run test && bun run build"
+  },
+  "dependencies": {
+    "ot-json0": "^1.1.0"
+  },
+  "peerDependencies": {
+    "sinwan": ">=2.0.0 <3.0.0",
+    "typescript": ">=5.0.0 <8.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "sinwan": "2.0.0",
+    "happy-dom": "^20.14.5"
+  }
+}
