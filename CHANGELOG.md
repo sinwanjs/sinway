@@ -2,9 +2,9 @@
 
 All notable changes to **sinway** are documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/) and sinway adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.1.0] — Reactive Stores Extracted from Sinwan
+## [1.0.0] — Reactive Stores Extracted from Sinwan
 
-sinway 0.1.0 is the first release of the store package that used to live in `sinwan/store`. Pair with **sinwan 2.0.0** or later. The store reads `signal` and `batch` from `sinwan/reactivity` and does not ship a second reactivity runtime.
+sinway 1.0.0 is the first release of the store package that used to live in `sinwan/store`. Pair with **sinwan 2.0.0** or later. The store reads `signal` and `batch` from `sinwan/reactivity` and does not ship a second reactivity runtime.
 
 ### Added
 
