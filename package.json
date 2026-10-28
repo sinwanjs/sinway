@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "sinwan": "2.0.0",
     "happy-dom": "^20.14.5"
   }
 }
