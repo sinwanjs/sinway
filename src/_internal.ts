@@ -206,6 +206,15 @@ export function wrap<T extends object>(target: T, isMutable = false): T {
         return createArrayMethod(t, key);
       }
 
+      // Inherited members (`Array.prototype.find`, `Symbol.iterator`,
+      // `Object.prototype.toString`) are not state: return them untracked.
+      // Tracking them gave each one a signal that `syncNode` then treated as a
+      // deleted own key and set to `undefined` on the next write. Methods still
+      // run with the proxy as `this`, so the elements they read stay tracked.
+      if (desc === undefined && key in t) {
+        return Reflect.get(t, key, receiver);
+      }
+
       return readProp(t, key);
     },
 

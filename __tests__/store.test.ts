@@ -930,6 +930,39 @@ describe("store edge cases", () => {
 // ─── Regression tests ────────────────────────────────────
 
 describe("store regressions", () => {
+  it("array methods and iteration survive later writes (inherited keys are not tracked)", () => {
+    const [state, setState] = createStore({ list: [{ id: "a" }, { id: "b" }], other: 0 });
+    // Read through prototype members first: methods, iteration.
+    expect(state.list.some((item) => item.id === "a")).toBe(true);
+    expect([...state.list]).toHaveLength(2);
+
+    // Any write syncs the tree: an unrelated path, an object merge, the array itself.
+    setState("other", 1);
+    expect(typeof state.list.find).toBe("function");
+    expect(state.list.find((item) => item.id === "b")?.id).toBe("b");
+    expect([...state.list].map((item) => item.id)).toEqual(["a", "b"]);
+
+    setState({ list: [{ id: "c" }], other: 2 });
+    expect(state.list.map((item) => item.id)).toEqual(["c"]);
+    for (const item of state.list) expect(item.id).toBe("c");
+
+    setState("list", [{ id: "d" }, { id: "e" }]);
+    expect(state.list.filter((item) => item.id !== "d").map((item) => item.id)).toEqual(["e"]);
+    expect(state.list.length).toBe(2);
+  });
+
+  it("an effect reading an array through a method reruns when the array changes", async () => {
+    const [state, setState] = createStore({ list: [1, 2], other: 0 });
+    const sums: number[] = [];
+    effect(() => {
+      sums.push(state.list.reduce((sum, value) => sum + value, 0));
+    });
+    setState("other", 1);
+    setState("list", [5, 5]);
+    await nextTick();
+    expect(sums).toEqual([3, 10]);
+  });
+
   it("array pop() returns the removed element", () => {
     const state = createMutable({ list: [1, 2, 3] });
     const popped = state.list.pop();

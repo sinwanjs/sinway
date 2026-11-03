@@ -1,6 +1,6 @@
 {
   "name": "sinway",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fine-grained reactive stores for Sinwan — createStore, persist, temporal undo/redo, and full json0 OT.",
   "author": "Mohammed Ben Cheikh",
   "license": "MIT",
